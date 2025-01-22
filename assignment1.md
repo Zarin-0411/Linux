@@ -1,9 +1,9 @@
 # Account Setup
-- In  the first step, I'd create an Microsoft Azure account using email address that university provoded me.
+- In  the first step, I'd created a Microsoft Azure account using email address that university had provoded me.
 
-- Then I got  to know about the cloud and it's importance. 
+- Then I got  to know about the cloud and its' importance. 
 
-- Additionally, I explored student benefits  and open an student account and Azure give me **$100** worth of credits that I can use to purchase any pachage within the environment.
+- Additionally, I explored student benefits  and open an student account and Azure give me **$100** worth of credits that I can use to purchase any package within the environment.
 
 
 # Create Virtual Machine
@@ -11,7 +11,7 @@
 
 - Then I select Marketplace from **Ubuntu Server 24.04 LTS gen 2 Server** published by Canonical. 
 
-- I named my machine **"lab-robotics"**.
+- I named my machine **"zap-robotics"**.
 
 - I choose B series version 2 which is **Standard_B2ls_v2**.
 
