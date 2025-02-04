@@ -20,9 +20,9 @@
 - [Assignment 4 - Link](https://github.com/Zarin-0411/Linux/blob/main/README.md)
 - `It is a code block `
 
-| No  | Title |
+| No  | Title       |
 | --- | ----------- |
-| 1   | Text       |
+| 1   | Text        |
 | 2   | Text        |
 | 3   | Text        |
 | 4   | Text        |
