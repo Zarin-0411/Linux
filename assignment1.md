@@ -105,3 +105,39 @@ This configuration ensures:
 - New files automatically inherit the projekti group
 - Other users cannot access the directory
 - Both users have full control over the directory and its contents
+
+- ## Assingment 5
+
+In this assignment, we created a shell script called print.sh to add a line to the file discspace.txt, reporting the home directory size and the current date and time. We used crontab to schedule this script to run every 12 hours,it runs at least six times to populate discspace.txt with multiple entries. Finally, we used command using awk-tool to find the line with the maximum value in the first column and printed it. 
+
+## Create a script and add it to cron
+
+we use `print.sh` command to add a line to the file discspace.txt, reporting the home directory size and the current date.
+
+![image](https://github.com/user-attachments/assets/e42375a2-69fc-4efe-98b4-b323440333ae)
+
+we use `crontab -e` command to open your crontab file:
+
+Then I use `0 */12 * * * /home/zap/print.sh` to run the print.sh script every 12 hours:
+
+![image](https://github.com/user-attachments/assets/55ee8eb7-c0bf-4d40-b7ac-d5e0816f16f8)
+
+## Run the script a minimum of 6 times
+
+After adding the script to cron, it will automatically run every 12 hours, adding a line to discspace.txt each time. Ensure that it runs at least 6 times so that the file contains at least 6 lines.
+
+![image](https://github.com/user-attachments/assets/adc48173-f47c-45fe-80b4-761f24c1ae2c)
+
+
+## Find and print the line containing the maximum size
+
+I use the following awk command to find the line with the maximum size and print it in the specified format:
+
+``` bash
+awk 'NR == 1 || $1 > max { max = $1; max_line = $0 } END { print "Max=" max ", at " substr(max_line, index(max_line, $2)) }' /home/zap/discspace.txt
+```
+
+![image](https://github.com/user-attachments/assets/43777bdd-08fd-4e3e-b97e-7f20fe1825da)
+
+
+
