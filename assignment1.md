@@ -139,5 +139,243 @@ awk 'NR == 1 || $1 > max { max = $1; max_line = $0 } END { print "Max=" max ", a
 
 ![image](https://github.com/user-attachments/assets/43777bdd-08fd-4e3e-b97e-7f20fe1825da)
 
+# Assingment 6
+
+
+# Part 1: Understanding APT & System Updates
+
+### 1.APT Version Check
+
+Command executed:
+``` bash
+apt --version
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/ac35da41-708b-4d7b-ae9a-5370f95c7b6b)
+
+
+### 2. Package List Update
+
+Command executed:
+``` bash
+sudo apt update
+```
+Output:
+
+![image](https://github.com/user-attachments/assets/325da726-ee81-48f6-8e18-1fbabd9a9fc5)
+
+ **This step is important because:**
+
+- Ensures the system has the latest information about available packages
+- Helps identify which packages need updates
+- It synchronizes the local package index with the remote repositories
+- Required before performing any package installations or upgrades
+
+
+### 3. Upgrade installed packages
+
+Command executed:
+``` bash
+sudo apt upgrade -y
+```
+Output:
+
+![image](https://github.com/user-attachments/assets/f709ff35-8749-4892-9d6d-3bd0e724bd0a)
+
+![image](https://github.com/user-attachments/assets/7daed2e2-25ca-410e-8f24-88d1c3925692)
+
+
+**Difference between update and upgrade:**
+
+- apt update only refreshes the package index and metadata
+- apt upgrade actually downloads and installs newer versions of installed packages
+
+### 4. Pending Updates Check
+
+Command executed:
+``` bash
+apt list --upgradable
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/da5b43af-3125-4196-806b-317f5799fec4)
+
+
+# Part 2: Installing & Managing Packages
+
+### 5. Search for a package using APT
+
+Command executed:
+``` bash
+apt search image editor
+```
+
+*Selected package: kolourpaint ( simple image editor and drawing application)*
+
+### 6. View Package Details
+
+Command executed:
+``` bash
+apt show kolourpaint
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/18508f48-578d-4bf4-894d-563c3cb789d8)
+
+
+**Dependencies:**
+
+- kio, libc6 (>= 2.38), libkf5configcore5 (>= 4.97.0), libkf5configgui5 (>= 4.97.0), libkf5configwidgets5 (>= 5.23.0), libkf5coreaddons5 (>= 5.16.0), libkf5guiaddons-bin, libkf5guiaddons5 (>= 5.90.0~), libkf5i18n5 (>= 5.90.0~), libkf5jobwidgets5 (>= 5.90.0~), libkf5kiocore5 (>= 5.90.0~), libkf5kiofilewidgets5 (>= 5.90.0~), libkf5kiogui5 (>= 5.90.0~), libkf5sane5 (>= 23.08.5~), libkf5textwidgets5 (>= 5.90.0~), libkf5widgetsaddons5 (>= 5.100.0), libkf5xmlgui5 (>= 5.90.0~), libqt5core5t64 (>= 5.15.2~), libqt5gui5t64 (>= 5.15.2~) | libqt5gui5-gles (>= 5.15.2~), libqt5printsupport5t64 (>= 5.15.2~), libqt5widgets5t64 (>= 5.15.2~), libstdc++6 (>= 4.1.1)
+
+### 7. Package Installation
+
+Command executed:
+``` bash
+sudo apt install kolourpaint -y
+```
+
+*Installation was successful, verified by launching the application.*
+
+### 8. Version Check
+
+Command executed:
+``` bash
+apt list --installed | grep kolourpaint
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/3597fe88-8042-4457-ae74-7666fc1c47fc)
+
+
+# Part 3: Removing & Cleaning Packages
+
+### 9. Uninstall the package
+
+Command executed:
+``` bash
+sudo apt remove kolourpaint -y
+```
+
+*Note: This removes the package but keeps configuration files.*
+
+### 10. Remove Configuration files
+
+Command executed:
+``` bash
+sudo apt purge kolourpaint -y
+```
+
+**Difference between remove and purge:**
+
+- remove only uninstalls the package binaries
+- purge removes both the binaries and configuration files
+
+### 11. Clear Unnecessary Dependencies
+
+Command executed:
+``` bash
+sudo apt autoremove -y
+```
+
+**This step is important because:**
+
+- Removes packages that were installed as dependencies but are no longer needed
+- Keeps the system clean from unused software
+- Free disk space
+
+
+### 12. Clean Up Downloaded Package Files
+
+Command executed:
+``` bash
+sudo apt clean
+```
+
+**This command:**
+
+- Removes all downloaded package files (.deb) from the local cache
+- Frees up disk space in /var/cache/apt/archives/
+- Doesn't affect installed packages
+
+# Part 4: Managing Repositories & Troubleshooting
+
+### 13. Repository List
+
+Command executed:
+``` bash
+cat /etc/apt/sources.list
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/ac63d78d-b4e7-4682-be54-ef3761398e34)
+
+**Observations:**
+
+- Contains main Ubuntu repositories
+- Includes different components (main, restricted, universe, multiverse)
+- Lists both source and binary package repositories
+- Contains security updates repositories
+
+### 14. To Add Universe Repository
+
+Command executed:
+``` bash
+sudo add-apt-repository universe
+sudo apt update
+```
+
+Output:
+
+![image](https://github.com/user-attachments/assets/0862c2c9-f1da-488d-8c54-748c5db851fd)
+
+**Universe repository contains:**
+
+- Community-maintained software
+- Wide range of applications
+- Less official support
+  
+
+### 15. Installation Failure Simulation
+
+Command executed:
+``` bash
+sudo apt install fakepackage
+```
+
+Error message:
+
+![image](https://github.com/user-attachments/assets/f3c0ca33-f800-4a6b-ada0-fad0e6d0e070)
+
+**Troubleshooting steps:**
+
+1. Check package name 
+2. Check repositories
+3. Update package lists
+4. Search for package
+5. Fix broken package
+
+### _Bonus Challenge: Package Hold Management_
+
+Commands executed:
+``` bash
+sudo apt-mark hold firefox
+sudo apt-mark unhold firefox
+```
+![image](https://github.com/user-attachments/assets/4c35a087-2474-4a35-bae0-2c648caa620b)
+
+**Reasons to hold a package:**
+
+- To prevent unwanted updates
+- To maintain a stable version of a package that is known to work well with your system.
+- To custom configurations
+- To test new versions of other packages without affecting the held package.
+
+
 
 
