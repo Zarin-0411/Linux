@@ -376,6 +376,208 @@ sudo apt-mark unhold firefox
 - To custom configurations
 - To test new versions of other packages without affecting the held package.
 
+## Assingment 7
 
+### Linux Virtualization Exercise
+
+### Part 1: Introduction to virtualization concepts
+
+#### Key Concepts Overview
+
+**Virtualization**
+
+Virtualization is a technology that uses software to create multiple virtual machines (VMs) on a single physical computer. Each VM operates like an independent computer, with its own operating system and applications, even though they share the same physical hardware.
+
+**Hypervisor**
+
+A hypervisor (or Virtual Machine Monitor) is software that creates and manages virtual machines. There are two types:
+
+Type 1 (Bare Metal):Runs directly on the host’s hardware and acts like a lightweight operating system.
+Type 2 (Hosted): Runs on top of an operating system , like any other software application.
+
+**Virtual Machines (VMs)**
+
+A virtual machine (VM) is a software-based emulation of a physical computer. It runs an operating system and applications just like a physical computer, but it operates within a host environment, which can be a physical server or a cloud infrastructure
+
+**Containers**
+
+Containers are a lightweight form of virtualization that package an application and its dependencies into a single unit, ensuring it runs consistently across different computing environments
+
+#### The main differences between VMs and tanks
+
+**Architecture**
+
+- **VMs**:VMs run a complete operating system, including its own kernel, on top of the host’s hardware.
+- **Containers**: Containers share the host operating system’s kernel and run as isolated processes within the host OS.
+
+**Resource Utilization**
+
+- **VMs**: VMs are more resource-intensive because they require a full OS for each VM, leading to higher CPU, memory, and storage usage
+- **Containers**:Containers are more resource-efficient as they share the host OS and only include the necessary libraries and dependencies for the application
+
+**Isolation Level**
+
+- **VMs**: VMs provide strong isolation as each VM runs its own OS, making them suitable for running different operating systems on the same hardware
+- **Containers**: Containers provide lightweight isolation by sharing the host OS kernel, making them more efficient but less isolated compared to VMs
+
+### Part 2: Multipass Implementation
+
+### Installation
+
+- Install Multipass
+``` bash
+sudo snap install multipass
+```
+![image](https://github.com/user-attachments/assets/6c20aaf7-b0e5-4104-b088-808d85f9c7d0)
+
+### Basic Commands Implementation
+
+- Launch default Ubuntu instance
+
+```bash
+multipass launch --name primary-vm
+```
+![image](https://github.com/user-attachments/assets/3275d6ce-a413-4b10-97c1-5e51b87d01bf)
+
+- List running instances
+
+```bash
+multipass list
+```
+![image](https://github.com/user-attachments/assets/edf47b93-2dd3-458a-b97d-7397f4b21419)
+
+- View details about a specific instance
+
+```bash
+multipass info primary-vm
+```
+![image](https://github.com/user-attachments/assets/71bb8116-3260-4bed-8122-3aeb9d54edeb)
+
+- Access to the shell of a running instance
+
+```bash
+multipass shell primary-vm
+```
+![image](https://github.com/user-attachments/assets/66d8d952-84cd-4db3-bedb-2da8b1a77e0b)
+
+- Run the command on the instance
+
+```bash
+multipass exec primary-vm -- ls -la
+```
+![image](https://github.com/user-attachments/assets/68041273-05ed-4ea6-b146-d2e463b1881d)
+
+- Stop the running instance
+
+```bash
+multipass stop primary-vm
+```
+![image](https://github.com/user-attachments/assets/b3ea813c-5548-4d88-bdee-916896c1f9b9)
+
+- Delete the instance
+
+```bash
+multipass delete primary-vm
+```
+![image](https://github.com/user-attachments/assets/a2698178-c54d-4f50-8753-ff07fb693553)
+
+
+#### Cloud-init Configuration
+
+**Start a New Instance with Multipass**
+
+![image](https://github.com/user-attachments/assets/2f18720d-c818-4296-8a25-1e5a3995932e)
+
+
+To start a new instance using this cloud-init configuration, you can use the following multipass command:
+
+```bash
+multipass launch --name my-instance --cloud-init cloud-init.yaml
+```
+
+#### File sharing
+To share files and folders between your host computer and Multipass instances
+```bash
+mkdir ~/shared-folder
+```
+#### Policy
+Create a shared folder and access it from both your host and your Multipass instance
+```bash
+multipass mount ~/shared-folder my-instance:/shared
+```
+
+### Part 3: LXD Implementation
+
+### Create container
+
+```bash
+lxc launch ubuntu:20.04 my-container
+```
+![image](https://github.com/user-attachments/assets/5c134c71-9207-4aaf-a202-d6a1453315d3)
+
+### List containers
+```bash
+lxc list
+```
+![image](https://github.com/user-attachments/assets/11abc4ad-b1c4-43f6-835f-bf4959daf27e)
+
+### Execute commands
+```bash
+lxc exec my-container -- apt update
+```
+
+### Stop container
+```bash
+lxc stop my-container
+```
+
+### Delete container
+
+```bash
+lxc delete my-container
+```
+
+# Part 4: Docker Implementation
+
+#### Installation
+
+```bash
+sudo apt update
+sudo apt install docker.io
+```
+### Start and enable Docker
+
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker
+```
+
+- Basic Docker Commands
+
+```bash
+docker pull ubuntu:latest
+docker run -it ubuntu:latest
+docker ps 
+docker stop container_id
+```
+![image](https://github.com/user-attachments/assets/29167e32-284a-4222-84c5-850acd831d59)
+
+
+### Part 5: Snaps for Self-Contained Applications 
+
+#### Creating a Basic Snap
+
+![image](https://github.com/user-attachments/assets/83d85764-da7b-4d85-be30-422e2d8f37d5)
+
+
+### Build and install
+#### Build snap
+```bash
+snapcraft
+```
+#### Install locally
+```bash
+sudo snap install my-app_1.0_amd64.snap --dangerous
+```
 
 
