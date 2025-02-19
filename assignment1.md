@@ -494,6 +494,7 @@ To start a new instance using this cloud-init configuration, you can use the fol
 ```bash
 multipass launch --name my-instance --cloud-init cloud-init.yaml
 ```
+![image](https://github.com/user-attachments/assets/228fe400-4d38-447c-8d9f-999e5ada5306)
 
 #### File sharing
 To share files and folders between your host computer and Multipass instances
