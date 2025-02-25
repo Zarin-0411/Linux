@@ -495,6 +495,7 @@ To start a new instance using this cloud-init configuration, you can use the fol
 multipass launch --name my-instance --cloud-init cloud-init.yaml
 ```
 ![image](https://github.com/user-attachments/assets/228fe400-4d38-447c-8d9f-999e5ada5306)
+![image](https://github.com/user-attachments/assets/ec89cc62-9a0a-4931-900a-f7ba4fda9a41)
 
 #### File sharing
 To share files and folders between your host computer and Multipass instances
@@ -506,6 +507,8 @@ Create a shared folder and access it from both your host and your Multipass inst
 ```bash
 multipass mount ~/shared-folder my-instance:/shared
 ```
+![image](https://github.com/user-attachments/assets/2db73608-8569-4e4d-8ca2-8316dc7786ed)
+
 
 ### Part 3: LXD Implementation
 
@@ -561,18 +564,65 @@ docker run -it ubuntu:latest
 docker ps 
 docker stop container_id
 ```
+![image](https://github.com/user-attachments/assets/22f3d977-d06e-4447-9ef1-82f2742fe7c3)
+
 ![image](https://github.com/user-attachments/assets/29167e32-284a-4222-84c5-850acd831d59)
 
 
 ### Part 5: Snaps for Self-Contained Applications 
 
 #### Creating a Basic Snap
+- To install snapcraft:
+```bash
+sudo apt update
+sudo snap install snapcraft --classic
+```
+- To create a project directory:
+```bash
+mkdir my-snapcraft
+cd my-snapcraft
+```
+- To make an application script:
+```bash
+mkdir bin
+nano bin/hello-snap
+```
+- Paste the content
+```bash
+#!/bin/bash
+echo "Hello, Snap!"
+```
+- To execute script:
+```bash
+chmod +x bin/hello-snap
+```
+#### To create the snapcraft yaml file:
+```bash
+nano snapcraft.yaml
+```
+Paste the content:
+```bash
+name: my-snapcraft
+base: core22
+version: "1.0"
+summary: "A simple Snapcraft app"
+description: "This is a simple Snap application that prints Hello, Snap!"
 
-![image](https://github.com/user-attachments/assets/83d85764-da7b-4d85-be30-422e2d8f37d5)
+grade: stable
+confinement: strict
 
+apps:
+  hello:
+    command: bin/hello-snap
 
-### Build and install
-#### Build snap
+parts:
+  hello:
+    plugin: dump
+    source: .
+```
+![image](https://github.com/user-attachments/assets/3ad8ec07-ce87-4ec7-91f3-6ee407142e02)
+
+### Build snap
 ```bash
 snapcraft
 ```
@@ -580,5 +630,10 @@ snapcraft
 ```bash
 sudo snap install my-app_1.0_amd64.snap --dangerous
 ```
+#### Run snap
+```bash
+my-snapcraft.hello
+```
+
 
 
