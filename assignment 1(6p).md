@@ -36,12 +36,16 @@ Since we already have installed gcc compiler we do not need to install the compi
     - Save the file (Ctrl + s)
     - Exit from nano editor (Ctrl + x)
 
+![image](https://github.com/user-attachments/assets/a8ffd8d9-52bd-4692-9252-ea5d4684475a)
 
-4. Compile the file and make mycalc program. (-o mycalc : Output will be mycalc)
+
+4. Compile the file and make mycalc program. 
 
 ``` gcc mycalc.c -o mycalc```
 
 5. Now Run the app and check if its working with no issues. 
+
+![image](https://github.com/user-attachments/assets/9a6369b5-8700-47af-9dfc-8d8522017b61)
 
 
 6. Now we can modify to add our calculator codes. 
