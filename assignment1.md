@@ -634,6 +634,159 @@ sudo snap install my-app_1.0_amd64.snap --dangerous
 ```bash
 my-snapcraft.hello
 ```
+## Assingment 8
+
+### Linux Server Firewall Configuration
+
+### Creating a firewall 
+
+#### 1. Enable UFW on system start
+
+```bash
+sudo systemctl enable ufw
+sudo ufw enable
+```
+
+#### 2. Default Policies
+
+```bash
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+```
+![image](https://github.com/user-attachments/assets/449bddd2-e49c-4aa5-9f6b-677c05215ee9)
+
+
+### Service Rules
+
+#### SSH Server
+
+```bash
+sudo ufw allow 22/tcp
+sudo ufw limit ssh comment 'Rate limit SSH connections'
+```
+![image](https://github.com/user-attachments/assets/4a5cd753-b111-4c2a-bc3f-afe3c8fc0f69)
+
+
+#### Web Server (HTTP/HTTPS) rules
+
+```bash
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+```
+![image](https://github.com/user-attachments/assets/f0c52537-82db-45f4-88ea-8625db667d90)
+
+
+### Logging Configuration
+
+```bash
+sudo ufw logging on
+sudo ufw logging high
+```
+![image](https://github.com/user-attachments/assets/6abd91db-c0c1-4c8f-8e3c-c0f4270544cb)
+
+
+### Protection Against Common Attacks
+
+#### 1. SYN Flood Protection
+
+```bash
+# Add to /etc/sysctl.conf
+# Enable SYN cookies to prevent SYN flood attacks
+net.ipv4.tcp_syncookies = 1
+
+# Increase backlog queue to handle more concurrent SYN packets
+net.ipv4.tcp_max_syn_backlog = 2048
+
+# Reduce number of SYN-ACK retries to limit resource consumption
+net.ipv4.tcp_synack_retries = 2
+
+# Also add these parameters for additional SYN flood protection
+net.ipv4.tcp_syn_retries = 5
+net.ipv4.tcp_max_syn_backlog = 2048
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_ecn = 0
+net.ipv4.tcp_wmem = 4096 87380 8388608
+net.ipv4.tcp_rmem = 4096 87380 8388608
+
+# Apply settings
+sudo sysctl -p
+```
+![image](https://github.com/user-attachments/assets/0ca24b27-3c80-4587-b944-a16b4e61a1eb)
+
+
+#### 2. Additional Protection Measures
+
+#### Block invalid packets
+
+**What are invalid packets?**
+
+Invalid packets are those that do not start with the SYN flag alone in a TCP Three-Way Handshake. Any TCP connection that begins with a different flag or an unusual combination of flags, such as those from port-scanning tools like Nmap, should be blocked.
+
+**How UFW blocks invalid packets**
+
+Default rules added by UFW on /etc/ufw/before.rules file:
+
+```bash
+# drop INVALID packets (logs these in loglevel medium and higher)
+-A ufw-before-input -m conntrack --ctstate INVALID -j ufw-logging-deny
+-A ufw-before-input -m conntrack --ctstate INVALID -j DROP
+```
+
+Add these two rules below the ones added by default by UFW:
+
+```bash
+-A ufw-before-input -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ufw-logging-deny
+-A ufw-before-input -p tcp -m tcp ! --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j DROP
+```
+![image](https://github.com/user-attachments/assets/1ce6e9e7-e3db-4dcf-a66b-8819f048c3f9)
+
+
+#### Block ping (ICMP) requests
+
+**ICMP flood attack?**
+
+An ICMP flood attack, also known as a ping flood, is a type of Denial of Service (DoS) attack. It overwhelms a system by sending a huge number of ICMP packets, specifically echo requests (pings).
+
+**to prevent ICMP requests**
+
+By commenting the lines below to block ping requests (icmp protocol) by ufw on file /etc/ufw/before.rules:
+
+```bash
+# ok icmp codes for INPUT
+-A ufw-before-input -p icmp --icmp-type destination-unreachable -j ACCEPT
+-A ufw-before-input -p icmp --icmp-type time-exceeded -j ACCEPT
+-A ufw-before-input -p icmp --icmp-type parameter-problem -j ACCEPT
+-A ufw-before-input -p icmp --icmp-type echo-request -j ACCEPT
+
+# ok icmp code for FORWARD
+-A ufw-before-forward -p icmp --icmp-type destination-unreachable -j ACCEPT
+-A ufw-before-forward -p icmp --icmp-type time-exceeded -j ACCEPT
+-A ufw-before-forward -p icmp --icmp-type parameter-problem -j ACCEPT
+-A ufw-before-forward -p icmp --icmp-type echo-request -j ACCEPT
+```
+![image](https://github.com/user-attachments/assets/5d4dadfe-dc6d-4946-a4ca-3f41027dd979)
+
+Now, reload UFW:
+
+```bash
+sudo ufw reload
+```
+![image](https://github.com/user-attachments/assets/557e835e-06e4-4ad8-a458-91529664846a)
+
+### Verification and Monitoring
+
+```bash
+sudo ufw status verbose
+sudo tail -f /var/log/ufw.log
+```
+###Test service accessibility
+```bash
+nc -zv [server-ip] 22
+nc -zv [server-ip] 80
+nc -zv [server-ip] 443
+```
+![image](https://github.com/user-attachments/assets/0db32cfe-ec58-40fa-8b9b-6ddf023bde2e)
+
 
 
 
