@@ -15,10 +15,15 @@ Ubuntu/Debian:
 sudo apt update
 sudo apt install gcc
 ```
+![image](https://github.com/user-attachments/assets/8592ab03-fe31-4d0e-ab64-8fb52a2c3151)
+
+![image](https://github.com/user-attachments/assets/950dece1-12f5-4037-994d-a529ac36f20e)
 
 Once installed, verify by running:
 
 ```gcc --version```
+
+![image](https://github.com/user-attachments/assets/1f7abdce-88f0-4301-b34d-2e4b8228c229)
 
 Since we already have installed gcc compiler we do not need to install the compiler again. 
 
@@ -48,4 +53,40 @@ Since we already have installed gcc compiler we do not need to install the compi
 ![image](https://github.com/user-attachments/assets/9a6369b5-8700-47af-9dfc-8d8522017b61)
 
 
-6. Now we can modify to add our calculator codes. 
+6. Now we can modify to add our calculator codes.
+
+Updating mycalc.c to Perform Addition
+
+Open mycalc.c 
+
+        nano mycalc.c
+
+Modify the code to:
+```bash
+#include <stdio.h>
+
+int main() {
+    int num1, num2, sum;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &num1, &num2);
+    sum = num1 + num2;
+    printf("Sum: %d\n", sum);
+    return 0;
+}
+```
+
+Save (Ctrl + S) and exit (Ctrl + X).
+
+![image](https://github.com/user-attachments/assets/d24774a9-3e78-4afa-a39d-fb808d5a3073)
+
+
+Recompile:
+
+        gcc mycalc.c -o mycalc
+
+Run the updated program:
+
+        ./mycalc
+
+![image](https://github.com/user-attachments/assets/583f44b0-a4b3-4d84-b76e-320423f5cf54)
+
