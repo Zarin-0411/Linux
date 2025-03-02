@@ -90,3 +90,67 @@ Run the updated program:
 
 ![image](https://github.com/user-attachments/assets/583f44b0-a4b3-4d84-b76e-320423f5cf54)
 
+### Install Node.js and npm
+
+```bash
+sudo apt-get install nodejs npm
+```
+### Set up Express web server
+- To create a new directory:
+```bash
+mkdir myserver && cd myserver
+```
+- Initialize npm:
+```bash
+npm init -y
+```
+- to install Express:
+```bash
+npm install express
+```
+![image](https://github.com/user-attachments/assets/84b5dfd3-587f-4cce-9f3a-2a593a5ed32d)
+
+### Create myserver.js and add the following code:
+```bash
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+    res.send('Hello World!');
+});
+
+app.get('/user', (req, res) => {
+    res.json({
+        user: process.env.USER || 'unknown',
+        home: process.env.HOME || 'unknown'
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}/`);
+});
+```
+- To run the server:
+```bash
+node myserver.js
+```
+![image](https://github.com/user-attachments/assets/1d82fa27-6a60-4bdf-92cd-14b7f5e95e31)
+
+### Install Python3 and pip
+```bash
+sudo apt-get update
+```
+![image](https://github.com/user-attachments/assets/0cb78754-f0e3-47d5-b1d9-c08ab994c631)
+
+```bash
+sudo apt-get install python3 python3-pip
+```
+
+![image](https://github.com/user-attachments/assets/32f994d0-f472-4cf5-99ac-1842060caaea)
+
+```bash
+ pip install bpytop
+```
+![image](https://github.com/user-attachments/assets/197ad345-67a4-4bfb-a966-c0748cdb5fea)
+
